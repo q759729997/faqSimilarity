@@ -45,9 +45,10 @@ class TestJiebaSegment(unittest.TestCase):
         ['阿尔善', '站']
         ['朱日', '和', '基']
         """
+        segment_model = JiebaSegment(cut_all=True)
         print('{} 精确匹配模式 {}'.format('-'*15, '-'*15))
         for text in texts:
-            print(segment_model.cut(text, cut_all=True))
+            print(segment_model.cut(text))
         """
         ['温都尔', '站']
         ['东', '乌', '广厦']

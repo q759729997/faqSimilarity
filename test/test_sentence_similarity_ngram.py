@@ -12,7 +12,7 @@ sys.path.insert(0, './')  # 定义搜索路径的优先顺序，序号从0开始
 
 import faqSimilarity  # noqa
 print('faqSimilarity module path :{}'.format(faqSimilarity.__file__))  # 输出测试模块文件位置
-from faqSimilarity.models.jieba_segment import JiebaSegment  # noqa
+from faqSimilarity.models.ngram_segment import NGramSegment  # noqa
 from faqSimilarity.models.sentence_similarity import SentenceSimilarity  # noqa
 
 
@@ -35,7 +35,7 @@ class TestSentenceSimilarity(unittest.TestCase):
             '阿尔善站',
             '朱日和基'
         ]
-        segment_model = JiebaSegment()
+        segment_model = NGramSegment()
         similarity_model = SentenceSimilarity(segment_model)
         similarity_model.set_sentences(texts)
         similarity_model.TfidfModel()  # tfidf模型
@@ -54,14 +54,14 @@ class TestSentenceSimilarity(unittest.TestCase):
             print('search_result:{}'.format(search_result))
         """
         text:朱日和站
-        words:['朱日', '和', '站']
-        search_result:[('朱日和基', 0.7574243), ('温都尔站', 0.18476632)]
+        words:['朱日', '日和', '和站']
+        search_result:[('朱日和基', 0.81649655), ('温都尔站', 0.0)]
         text:温都尔站
-        words:['温都尔', '站']
-        search_result:[('温都尔站', 1.0), ('阿尔善站', 0.24478666)]
+        words:['温都', '都尔', '尔站']
+        search_result:[('温都尔站', 0.99999994), ('东乌广厦', 0.0)]
         text:国电站
-        words:['国', '电站']
-        search_result:[('温都尔站', 0.0), ('东乌广厦', 0.0)]
+        words:['国电', '电站']
+        search_result:[('国电四郎', 0.57735026), ('温都尔站', 0.0)]
         """
 
 

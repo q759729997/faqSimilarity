@@ -1,13 +1,11 @@
-import jieba
+from ngram import NGram
 from faqSimilarity.models.segment import Segment
 
 
-class JiebaSegment(Segment):
+class NGramSegment(Segment):
 
-    def __init__(self, cut_all=False):
-        # cut_all - 是否使用精确模式.
-        self.cut_all = cut_all
-        pass
+    def __init__(self, N=2, pad_len=0):
+        self.model = NGram(N=N, pad_len=pad_len)
 
     def cut(self, sentence):
         """ 分词.
@@ -19,4 +17,4 @@ class JiebaSegment(Segment):
                 On success - 单词列表.
                 On failure - 错误信息.
         """
-        return list(jieba.cut(sentence, cut_all=self.cut_all))
+        return list(list(self.model.split(sentence)))
