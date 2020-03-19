@@ -63,11 +63,12 @@ class SentenceSimilarity():
         self.simple_model()
 
         # 转换模型
-        self.model = models.LdaModel(self.corpus_simple)
+        self.model = models.LdaModel(self.corpus_simple, id2word=self.dictionary)
         self.corpus = self.model[self.corpus_simple]
-
+        print('len(self.dictionary):{}'.format(len(self.dictionary)))
         # 创建相似度矩阵
-        self.index = similarities.MatrixSimilarity(self.corpus)
+        self.index = similarities.MatrixSimilarity(self.corpus, num_features=len(self.dictionary))
+        # self.index = similarities.Similarity('./data', self.corpus, num_features=len(self.dictionary))
 
     # 对新输入的句子（比较的句子）进行预处理
     def sentence2vec(self, sentence):
